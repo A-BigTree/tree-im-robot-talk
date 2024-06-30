@@ -1,4 +1,4 @@
-package org.abigtree.im.robot.sdk.enums;
+package top.abigtree.im.robot.sdk.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

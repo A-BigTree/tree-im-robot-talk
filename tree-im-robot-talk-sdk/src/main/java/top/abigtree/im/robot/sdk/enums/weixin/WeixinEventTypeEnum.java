@@ -1,4 +1,4 @@
-package org.abigtree.im.robot.sdk.enums.weixin;
+package top.abigtree.im.robot.sdk.enums.weixin;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

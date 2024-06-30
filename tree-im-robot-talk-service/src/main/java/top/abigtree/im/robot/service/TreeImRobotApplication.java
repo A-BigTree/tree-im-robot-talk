@@ -1,4 +1,4 @@
-package org.abigtree.im.robot.service;
+package top.abigtree.im.robot.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

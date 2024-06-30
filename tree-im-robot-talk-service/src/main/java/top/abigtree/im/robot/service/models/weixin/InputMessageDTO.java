@@ -1,4 +1,4 @@
-package org.abigtree.im.robot.service.models.weixin;
+package top.abigtree.im.robot.service.models.weixin;
 
 import java.io.Serializable;
 
@@ -15,6 +15,8 @@ import lombok.Setter;
 @XStreamAlias("xml")
 @Setter
 public class InputMessageDTO implements Serializable {
+    @XStreamAlias("URL")
+    private String host;
     @XStreamAlias("ToUserName")
     private String toUserName;
     @XStreamAlias("FromUserName")
@@ -27,7 +29,7 @@ public class InputMessageDTO implements Serializable {
     private Long msgId;
     // 文本消息
     @XStreamAlias("Content")
-    private String Content;
+    private String content;
     // 图片消息
     @XStreamAlias("PicUrl")
     private String picUrl;
