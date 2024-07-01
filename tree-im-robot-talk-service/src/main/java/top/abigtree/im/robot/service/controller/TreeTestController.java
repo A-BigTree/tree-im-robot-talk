@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import top.abigtree.im.robot.service.service.XfXhChatService;
+
+import javax.annotation.Resource;
 
 /**
  * @author wangshuxin05 <wangshuxin05@kuaishou.com>
@@ -15,8 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/test")
 @Slf4j
 public class TreeTestController {
-    @GetMapping("/sendQuestion")
+    @Resource
+    private XfXhChatService xfXhChatService;
+
+    @GetMapping("/send")
     public String sendQuestion(@RequestParam("question") String question) {
-        return "Test";
+        return xfXhChatService.chat(question);
     }
 }

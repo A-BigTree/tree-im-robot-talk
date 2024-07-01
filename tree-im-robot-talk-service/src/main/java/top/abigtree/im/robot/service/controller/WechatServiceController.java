@@ -3,6 +3,7 @@ package top.abigtree.im.robot.service.controller;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.thoughtworks.xstream.XStream;
 
 import lombok.extern.slf4j.Slf4j;
+import top.abigtree.im.robot.service.config.XStreamFactory;
 import top.abigtree.im.robot.service.models.weixin.InputMessageDTO;
 import top.abigtree.im.robot.service.models.weixin.out.TextMessageDTO;
+import top.abigtree.im.robot.service.service.XfXhChatService;
 
 /**
  * @author wangshuxin05 <wangshuxin05@kuaishou.com>
@@ -27,6 +30,8 @@ import top.abigtree.im.robot.service.models.weixin.out.TextMessageDTO;
 @RequestMapping("/wechat")
 @Slf4j
 public class WechatServiceController {
+    @Resource
+    private XfXhChatService xfXhChatService;
 
     @RequestMapping(value = "/chat", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -46,7 +51,7 @@ public class WechatServiceController {
         // 处理接收消息
         ServletInputStream in = request.getInputStream();
         // 将POST流转换为XStream对象
-        XStream xs = new XStream();
+        XStream xs = XStreamFactory.createXStream();
         xs.processAnnotations(InputMessageDTO.class);
         // 将流转换为字符串
         StringBuilder xmlMsg = new StringBuilder();
@@ -57,22 +62,18 @@ public class WechatServiceController {
         // 将xml内容转换为InputMessage对象
         InputMessageDTO inputMsg = (InputMessageDTO) xs.fromXML(xmlMsg.toString());
         log.info("收到消息：{}", inputMsg);
-        // TODO 处理消息
+        String answer = xfXhChatService.chat(inputMsg.getContent());
         // 回复消息
         xs.processAnnotations(TextMessageDTO.class);
         TextMessageDTO out = TextMessageDTO.builder()
-                .fromUserName(buildCDATA(inputMsg.getToUserName()))
-                .toUserName(buildCDATA(inputMsg.getFromUserName()))
+                .fromUserName(inputMsg.getToUserName())
+                .toUserName(inputMsg.getFromUserName())
                 .createTime(System.currentTimeMillis())
-                .msgType(buildCDATA("text"))
-                .content(buildCDATA("测试收到消息：" + inputMsg.getContent()))
+                .msgType("text")
+                .content(answer)
                 .build();
         String str = xs.toXML(out);
         log.info("回复消息：{}", str);
         response.getWriter().write(str);
-    }
-
-    private String buildCDATA(String content) {
-        return "<![CDATA[" + content + "]]>";
     }
 }
