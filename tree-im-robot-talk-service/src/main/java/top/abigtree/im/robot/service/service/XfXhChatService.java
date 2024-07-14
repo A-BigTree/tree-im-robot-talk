@@ -7,10 +7,13 @@ import org.springframework.stereotype.Service;
 import top.abigtree.im.robot.service.component.XfXhStreamClient;
 import top.abigtree.im.robot.service.config.XfXhConfig;
 import top.abigtree.im.robot.service.listener.XfXhWebSocketListener;
+import top.abigtree.im.robot.service.models.weixin.InputMessageDTO;
 import top.abigtree.im.robot.service.models.xfxh.MsgDTO;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -19,12 +22,15 @@ import java.util.UUID;
  */
 @Service
 @Slf4j
-public class XfXhChatService {
+public class XfXhChatService extends BaseChatService {
     @Resource
     private XfXhStreamClient xfXhStreamClient;
     @Resource
     private XfXhConfig xfXhConfig;
 
+    private final static String TAG = "XfXh";
+
+    @Override
     public String chat(String question) {
         // 如果是无效字符串，则不对大模型进行请求
         if (StringUtils.isBlank(question)) {
@@ -61,6 +67,8 @@ public class XfXhChatService {
                 return "大模型响应超时，请联系管理员";
             }
             // 响应大模型的答案
+            String answer = listener.getAnswer().toString();
+            log.info("{}:{}", getTag(), answer);
             return listener.getAnswer().toString();
         } catch (InterruptedException e) {
             log.error("错误：" + e.getMessage());
@@ -71,5 +79,10 @@ public class XfXhChatService {
             // 归还令牌
             xfXhStreamClient.operateToken(XfXhStreamClient.BACK_TOKEN_STATUS);
         }
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
     }
 }

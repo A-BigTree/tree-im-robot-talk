@@ -8,6 +8,7 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,7 +63,12 @@ public class WechatServiceController {
         // 将xml内容转换为InputMessage对象
         InputMessageDTO inputMsg = (InputMessageDTO) xs.fromXML(xmlMsg.toString());
         log.info("收到消息：{}", inputMsg);
-        String answer = xfXhChatService.chat(inputMsg.getContent());
+        String answer =
+                xfXhChatService.chatWithCache(inputMsg.getContent(), inputMsg.getFromUserName(), inputMsg.getCreateTime());
+        if (StringUtils.isBlank(answer)) {
+            response.getWriter().write(StringUtils.EMPTY);
+            return;
+        }
         // 回复消息
         xs.processAnnotations(TextMessageDTO.class);
         TextMessageDTO out = TextMessageDTO.builder()
@@ -73,7 +79,6 @@ public class WechatServiceController {
                 .content(answer)
                 .build();
         String str = xs.toXML(out);
-        log.info("回复消息：{}", str);
         response.getWriter().write(str);
     }
 }

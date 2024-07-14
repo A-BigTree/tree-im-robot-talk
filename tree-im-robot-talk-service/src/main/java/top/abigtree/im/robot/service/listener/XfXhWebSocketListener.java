@@ -1,6 +1,7 @@
 package top.abigtree.im.robot.service.listener;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -14,19 +15,12 @@ import top.abigtree.im.robot.service.models.xfxh.ResponseDTO;
  * @author Shuxin Wang <shuxinwang662@gmail.com>
  * Created on 2024/7/2
  */
+@Getter
 @Slf4j
 public class XfXhWebSocketListener extends WebSocketListener {
     private StringBuilder answer = new StringBuilder();
 
     private boolean wsCloseFlag = false;
-
-    public StringBuilder getAnswer() {
-        return answer;
-    }
-
-    public boolean isWsCloseFlag() {
-        return wsCloseFlag;
-    }
 
     @Override
     public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
