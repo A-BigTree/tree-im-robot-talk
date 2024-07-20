@@ -1,4 +1,4 @@
-package top.abigtree.im.robot.service.config;
+package top.abigtree.im.robot.service.config.xfxh;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-import top.abigtree.im.robot.service.service.XfXhChatService;
+import top.abigtree.im.robot.service.service.chat.XfXhChatService;
 
 import javax.annotation.Resource;
 

@@ -1,4 +1,4 @@
-package top.abigtree.im.robot.service.service;
+package top.abigtree.im.robot.service.service.chat;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,7 +11,7 @@ import java.util.Map;
  */
 @Slf4j
 public abstract class BaseChatService {
-    private final static int MAX_CACHE_SIZE = 100;
+    private final static int MAX_CACHE_SIZE = 500;
 
     private final static long WAITING_TIME = 4000L;
 

@@ -1,19 +1,17 @@
-package top.abigtree.im.robot.service.service;
+package top.abigtree.im.robot.service.service.chat;
 
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.WebSocket;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import top.abigtree.im.robot.service.component.XfXhStreamClient;
-import top.abigtree.im.robot.service.config.XfXhConfig;
+import top.abigtree.im.robot.service.config.xfxh.XfXhConfig;
 import top.abigtree.im.robot.service.listener.XfXhWebSocketListener;
-import top.abigtree.im.robot.service.models.weixin.InputMessageDTO;
 import top.abigtree.im.robot.service.models.xfxh.MsgDTO;
+import top.abigtree.im.robot.service.service.chat.BaseChatService;
 
 import javax.annotation.Resource;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**

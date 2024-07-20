@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import top.abigtree.im.robot.service.config.XfXhConfig;
+import top.abigtree.im.robot.service.config.xfxh.XfXhConfig;
 import top.abigtree.im.robot.service.models.xfxh.MsgDTO;
 import top.abigtree.im.robot.service.models.xfxh.RequestDTO;
 

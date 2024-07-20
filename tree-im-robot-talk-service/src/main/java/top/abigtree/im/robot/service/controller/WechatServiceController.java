@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import top.abigtree.im.robot.service.config.XStreamFactory;
 import top.abigtree.im.robot.service.models.weixin.InputMessageDTO;
 import top.abigtree.im.robot.service.models.weixin.out.TextMessageDTO;
-import top.abigtree.im.robot.service.service.XfXhChatService;
+import top.abigtree.im.robot.service.service.chat.XfXhChatService;
 
 /**
  * @author wangshuxin05 <wangshuxin05@kuaishou.com>
