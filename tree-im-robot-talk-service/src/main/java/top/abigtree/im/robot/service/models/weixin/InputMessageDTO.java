@@ -34,9 +34,9 @@ public class InputMessageDTO implements Serializable {
     @XStreamAlias("PicUrl")
     private String picUrl;
     // 位置消息
-    @XStreamAlias("LocationX")
+    @XStreamAlias("Location_X")
     private String locationX;
-    @XStreamAlias("LocationY")
+    @XStreamAlias("Location_Y")
     private String locationY;
     @XStreamAlias("Scale")
     private Long scale;

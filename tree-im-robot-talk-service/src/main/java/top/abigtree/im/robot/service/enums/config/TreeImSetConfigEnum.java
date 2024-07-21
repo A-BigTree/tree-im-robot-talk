@@ -21,12 +21,12 @@ import static top.abigtree.im.robot.service.enums.config.TreeImConfigOprationEnu
 @AllArgsConstructor
 public enum TreeImSetConfigEnum implements TreeImConfigInterface {
     // 管理员配置
-    adminConfig(Set.of("管理员"), TreeImRoleConfigEnum.ADMIN, Collections.singleton("oOt0g5rD2tourOQ-EQFspyfCFEjk")),
+    adminConfig("管理员", TreeImRoleConfigEnum.ADMIN, Collections.singleton("oOt0g5rD2tourOQ-EQFspyfCFEjk")),
     // 用户配置
-    userConfig(Set.of("用户"), TreeImRoleConfigEnum.ADMIN, Collections.emptySet()),
+    userConfig("用户", TreeImRoleConfigEnum.ADMIN, Collections.emptySet()),
 
     ;
-    final Set<String> keyWords;
+    final String keyWord;
     final TreeImRoleConfigEnum role;
     final Set<String> defaultConfig;
 

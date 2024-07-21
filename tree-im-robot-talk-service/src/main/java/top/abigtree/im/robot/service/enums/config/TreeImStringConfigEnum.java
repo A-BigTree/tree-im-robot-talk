@@ -19,33 +19,33 @@ public enum TreeImStringConfigEnum implements TreeImConfigInterface {
     /**
      * 星火大模型配置
      */
-    xfxhHost(Set.of("星火URL"), TreeImRoleConfigEnum.ADMIN, "https://spark-api.xf-yun.com/v3.1/chat"),
-    xfxhDomain(Set.of("星火模型"), TreeImRoleConfigEnum.ADMIN, "generalv3"),
-    xfxhTemperature(Set.of("星火阈值"), TreeImRoleConfigEnum.ADMIN, "0.5"),
-    xfxhMaxTokens(Set.of("星火最大生成长度"), TreeImRoleConfigEnum.ADMIN, "500"),
-    xfxhMaxResponseTime(Set.of("星火最大响应时间"), TreeImRoleConfigEnum.ADMIN, "30"),
-    xfxhQPS(Set.of("星火QPS"), TreeImRoleConfigEnum.ADMIN, "10"),
-    xfxhAppId(Set.of("星火appId"), TreeImRoleConfigEnum.ADMIN, "ee53fa4b"),
-    xfxhApiKey(Set.of("星火apiKey"), TreeImRoleConfigEnum.ADMIN, "0156c50d4844fe52d1f164c526a3a007"),
-    xfxhApiSecret(Set.of("星火密钥"), TreeImRoleConfigEnum.ADMIN, "ZmQyZTliNWFjYmEyZjRiMjc3NWFlYWM4"),
+    xfxhHost("星火URL", TreeImRoleConfigEnum.ADMIN, "https://spark-api.xf-yun.com/v3.1/chat"),
+    xfxhDomain("星火模型", TreeImRoleConfigEnum.ADMIN, "generalv3"),
+    xfxhTemperature("星火阈值", TreeImRoleConfigEnum.ADMIN, "0.5"),
+    xfxhMaxTokens("星火最大生成长度", TreeImRoleConfigEnum.ADMIN, "500"),
+    xfxhMaxResponseTime("星火最大响应时间", TreeImRoleConfigEnum.ADMIN, "30"),
+    xfxhQPS("星火QPS", TreeImRoleConfigEnum.ADMIN, "10"),
+    xfxhAppId("星火appId", TreeImRoleConfigEnum.ADMIN, "ee53fa4b"),
+    xfxhApiKey("星火apiKey", TreeImRoleConfigEnum.ADMIN, "0156c50d4844fe52d1f164c526a3a007"),
+    xfxhApiSecret("星火密钥", TreeImRoleConfigEnum.ADMIN, "ZmQyZTliNWFjYmEyZjRiMjc3NWFlYWM4"),
     /**
      * 大模型配置
      */
     // 上下文轮数配置
-    llmContextLength(Set.of("上下文轮数"), TreeImRoleConfigEnum.ADMIN, "3"),
+    llmContextLength("上下文轮数", TreeImRoleConfigEnum.ADMIN, "3"),
 
     /**
      * User大模型配置
      */
     // System Call
-    systemConfig(Set.of("大模型配置"), TreeImRoleConfigEnum.USER, "你叫老王二号机，是一名人工智能问答助手"),
+    systemConfig("大模型配置", TreeImRoleConfigEnum.USER, "你叫老王二号机，是一名人工智能问答助手"),
     /**
      * 用户位置配置
      */
-    locationConfig(Set.of("位置"), TreeImRoleConfigEnum.SYSTEM, "中国"),
+    locationConfig("位置", TreeImRoleConfigEnum.SYSTEM, "中国"),
 
     ;
-    final Set<String> keyWords;
+    final String keyWord;
     final TreeImRoleConfigEnum role;
     final String defaultConfig;
 
