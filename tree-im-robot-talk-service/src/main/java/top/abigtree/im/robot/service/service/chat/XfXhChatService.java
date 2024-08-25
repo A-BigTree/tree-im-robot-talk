@@ -8,7 +8,6 @@ import top.abigtree.im.robot.service.component.XfXhStreamClient;
 import top.abigtree.im.robot.service.config.xfxh.XfXhConfig;
 import top.abigtree.im.robot.service.listener.XfXhWebSocketListener;
 import top.abigtree.im.robot.service.models.xfxh.MsgDTO;
-import top.abigtree.im.robot.service.service.chat.BaseChatService;
 
 import javax.annotation.Resource;
 import java.util.Collections;
