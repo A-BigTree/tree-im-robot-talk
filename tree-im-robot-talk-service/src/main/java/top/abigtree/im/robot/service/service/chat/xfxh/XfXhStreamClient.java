@@ -1,7 +1,8 @@
-package top.abigtree.im.robot.service.component;
+package top.abigtree.im.robot.service.service.chat.xfxh;
 
 
 import com.alibaba.fastjson.JSONObject;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +11,6 @@ import top.abigtree.im.robot.service.config.xfxh.XfXhConfig;
 import top.abigtree.im.robot.service.models.xfxh.MsgDTO;
 import top.abigtree.im.robot.service.models.xfxh.RequestDTO;
 
-import javax.annotation.Resource;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URL;
