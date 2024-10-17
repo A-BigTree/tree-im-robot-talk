@@ -15,7 +15,7 @@ public class QianFanChatService extends BaseChatWithCacheService {
     private QianFanConfig qianFanConfig;
 
     @Override
-    public String chatWithCache(String question) {
+    protected String chatWithCache(String question) {
         Qianfan qianfan = new Qianfan(qianFanConfig.getAccessKey(), qianFanConfig.getSecretKey());
         ChatResponse response = qianfan.chatCompletion()
                 .model(qianFanConfig.getModel())

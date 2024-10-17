@@ -26,6 +26,6 @@ public class TreeTestController {
 
     @GetMapping("/send")
     public String sendQuestion(@RequestParam(value = "q", defaultValue = "你好") String question) {
-        return qianFanChatService.chatWithCache(question);
+        return qianFanChatService.chat(question, "admin", "admin", System.currentTimeMillis());
     }
 }

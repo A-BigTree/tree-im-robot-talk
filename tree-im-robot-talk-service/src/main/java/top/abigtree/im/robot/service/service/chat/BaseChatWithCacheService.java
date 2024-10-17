@@ -36,13 +36,9 @@ public abstract class BaseChatWithCacheService implements BaseChatService {
         }
     };
 
-    abstract public String chatWithCache(String question);
-
-    abstract public String getTag();
-
     @Override
     public String chat(String question, String fromUser, String toUser, Long id) {
-        String key = buildCacheKey(fromUser, id);
+        String key = buildCacheKey(question, fromUser, toUser, id);
         try {
             if (CHAT_RECORD_CACHE.containsKey(key)) {
                 if (CHAT_RECORD_CACHE.get(key) != OK) {
@@ -50,7 +46,7 @@ public abstract class BaseChatWithCacheService implements BaseChatService {
                 }
             }
         } catch (InterruptedException e) {
-            log.error("Time waiting error");
+            log.error("1: Time waiting error");
         }
         if (CHAT_ANSWER_CACHE.containsKey(key)) {
             return CHAT_ANSWER_CACHE.get(key);
@@ -60,20 +56,24 @@ public abstract class BaseChatWithCacheService implements BaseChatService {
                 Thread.sleep(WAITING_TIME);
             }
         } catch (InterruptedException e) {
-            log.error("Time waiting error");
+            log.error("2: Time waiting error");
         }
         CHAT_RECORD_CACHE.put(key, WAITING);
-        String answer = chat(question);
+        String answer = chatWithCache(question);
         CHAT_ANSWER_CACHE.put(key, answer);
         CHAT_RECORD_CACHE.put(key, OK);
         return answer;
     }
 
-    private String buildCacheKey(String fromUser, Long createTime) {
-        return getTag() + "-" + fromUser + "-" + createTime;
-    }
-
     public boolean filterChatService(String keyword) {
         return true;
     }
+
+    protected String buildCacheKey(String question, String fromUser, String toUser, Long id) {
+        return getTag() + "-" + fromUser + "-" + id;
+    }
+
+    abstract protected String chatWithCache(String question);
+
+    abstract public String getTag();
 }

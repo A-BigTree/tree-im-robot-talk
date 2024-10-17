@@ -26,7 +26,7 @@ public class XfXhChatService extends BaseChatWithCacheService {
     private final static String TAG = "XfXh";
 
     @Override
-    public String chatWithCache(String question) {
+    protected String chatWithCache(String question) {
         // 如果是无效字符串，则不对大模型进行请求
         if (StringUtils.isBlank(question)) {
             return "无效问题，请重新输入";
