@@ -1,15 +1,13 @@
-package top.abigtree.im.robot.service.service.chat;
+package top.abigtree.im.robot.service.service.chat.ai.xfxh;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.WebSocket;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import top.abigtree.im.robot.service.component.XfXhStreamClient;
-import top.abigtree.im.robot.service.config.xfxh.XfXhConfig;
-import top.abigtree.im.robot.service.listener.XfXhWebSocketListener;
 import top.abigtree.im.robot.service.models.xfxh.MsgDTO;
+import top.abigtree.im.robot.service.service.chat.BaseChatWithCacheService;
 
-import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -19,7 +17,7 @@ import java.util.UUID;
  */
 @Service
 @Slf4j
-public class XfXhChatService extends BaseChatService {
+public class XfXhChatService extends BaseChatWithCacheService {
     @Resource
     private XfXhStreamClient xfXhStreamClient;
     @Resource
@@ -28,7 +26,7 @@ public class XfXhChatService extends BaseChatService {
     private final static String TAG = "XfXh";
 
     @Override
-    public String chat(String question) {
+    public String chatWithCache(String question) {
         // 如果是无效字符串，则不对大模型进行请求
         if (StringUtils.isBlank(question)) {
             return "无效问题，请重新输入";

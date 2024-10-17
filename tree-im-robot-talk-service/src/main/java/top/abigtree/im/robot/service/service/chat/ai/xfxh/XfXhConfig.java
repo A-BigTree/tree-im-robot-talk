@@ -1,4 +1,4 @@
-package top.abigtree.im.robot.service.config.xfxh;
+package top.abigtree.im.robot.service.service.chat.ai.xfxh;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * Created on 2024/7/2
  */
 @Configuration
-@ConfigurationProperties(prefix = "xfxh")
+@ConfigurationProperties(prefix = "chat-ai.xfxh")
 @Data
 public class XfXhConfig {
     /**

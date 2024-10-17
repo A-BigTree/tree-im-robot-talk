@@ -1,4 +1,4 @@
-package top.abigtree.im.robot.service.service.chat.xfxh;
+package top.abigtree.im.robot.service.service.chat.ai.xfxh;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;

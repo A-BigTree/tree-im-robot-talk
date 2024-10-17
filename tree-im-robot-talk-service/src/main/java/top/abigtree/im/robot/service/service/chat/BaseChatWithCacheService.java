@@ -10,7 +10,7 @@ import java.util.Map;
  * Created on 2024/7/2
  */
 @Slf4j
-public abstract class BaseChatService {
+public abstract class BaseChatWithCacheService implements BaseChatService {
     private final static int MAX_CACHE_SIZE = 500;
 
     private final static long WAITING_TIME = 4000L;
@@ -36,12 +36,13 @@ public abstract class BaseChatService {
         }
     };
 
-    abstract public String chat(String question);
+    abstract public String chatWithCache(String question);
 
     abstract public String getTag();
 
-    public String chatWithCache(String question, String fromUser, Long createTime) {
-        String key = buildCacheKey(fromUser, createTime);
+    @Override
+    public String chat(String question, String fromUser, String toUser, Long id) {
+        String key = buildCacheKey(fromUser, id);
         try {
             if (CHAT_RECORD_CACHE.containsKey(key)) {
                 if (CHAT_RECORD_CACHE.get(key) != OK) {
@@ -70,5 +71,9 @@ public abstract class BaseChatService {
 
     private String buildCacheKey(String fromUser, Long createTime) {
         return getTag() + "-" + fromUser + "-" + createTime;
+    }
+
+    public boolean filterChatService(String keyword) {
+        return true;
     }
 }

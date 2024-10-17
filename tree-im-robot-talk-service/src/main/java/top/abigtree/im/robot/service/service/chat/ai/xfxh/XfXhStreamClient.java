@@ -1,4 +1,4 @@
-package top.abigtree.im.robot.service.service.chat.xfxh;
+package top.abigtree.im.robot.service.service.chat.ai.xfxh;
 
 
 import com.alibaba.fastjson.JSONObject;
@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import top.abigtree.im.robot.service.config.xfxh.XfXhConfig;
 import top.abigtree.im.robot.service.models.xfxh.MsgDTO;
 import top.abigtree.im.robot.service.models.xfxh.RequestDTO;
 
@@ -29,7 +28,7 @@ public class XfXhStreamClient {
     @Resource
     private XfXhConfig xfXhConfig;
 
-    @Value("${xfxh.QPS}")
+    @Value("${chat-ai.xfxh.QPS}")
     private int connectionTokenCount;
 
     /**

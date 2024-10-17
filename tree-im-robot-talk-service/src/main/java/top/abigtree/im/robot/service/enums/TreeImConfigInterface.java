@@ -15,9 +15,13 @@ import static top.abigtree.im.robot.sdk.constants.ImTreeTipMessageConstants.*;
  * Created on 2024/7/20
  */
 public interface TreeImConfigInterface {
+
     TreeImRoleConfigEnum getRole();
+
     Set<TreeImConfigOprationEnum> containsOperation();
+
     Object getConfig(Map<String, Object> map);
+
     void operateConfig(TreeImConfigOprationEnum operation, Map<String, Object> map, String value);
 
 

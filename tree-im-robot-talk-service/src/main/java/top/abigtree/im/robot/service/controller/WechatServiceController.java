@@ -20,7 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import top.abigtree.im.robot.service.config.XStreamFactory;
 import top.abigtree.im.robot.service.models.weixin.InputMessageDTO;
 import top.abigtree.im.robot.service.models.weixin.out.TextMessageDTO;
-import top.abigtree.im.robot.service.service.chat.XfXhChatService;
+import top.abigtree.im.robot.service.service.chat.ai.qianfan.QianFanChatService;
+import top.abigtree.im.robot.service.service.chat.ai.xfxh.XfXhChatService;
 
 /**
  * @author wangshuxin05 <wangshuxin05@kuaishou.com>
@@ -32,6 +33,8 @@ import top.abigtree.im.robot.service.service.chat.XfXhChatService;
 public class WechatServiceController {
     @Resource
     private XfXhChatService xfXhChatService;
+    @Resource
+    private QianFanChatService qianFanChatService;
 
     @RequestMapping(value = "/chat", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -59,11 +62,13 @@ public class WechatServiceController {
         for (int n; (n = in.read(b)) != -1;) {
             xmlMsg.append(new String(b, 0, n, StandardCharsets.UTF_8));
         }
+        log.info("message: {}", xmlMsg);
         // 将xml内容转换为InputMessage对象
         InputMessageDTO inputMsg = (InputMessageDTO) xs.fromXML(xmlMsg.toString());
         log.info("收到消息：{}", inputMsg);
         String answer =
-                xfXhChatService.chatWithCache(inputMsg.getContent(), inputMsg.getFromUserName(), inputMsg.getCreateTime());
+                qianFanChatService.chat(inputMsg.getContent(), inputMsg.getFromUserName(),
+                        inputMsg.getToUserName(), inputMsg.getCreateTime());
         if (StringUtils.isBlank(answer)) {
             response.getWriter().write(StringUtils.EMPTY);
             return;
