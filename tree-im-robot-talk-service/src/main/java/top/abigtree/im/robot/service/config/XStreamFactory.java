@@ -9,6 +9,7 @@ import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDomDriver;
 import top.abigtree.im.robot.service.annotation.XStreamCDATA;
+import top.abigtree.im.robot.service.models.weixin.InputMessageDTO;
 
 import java.io.Writer;
 import java.lang.reflect.Field;
@@ -24,12 +25,13 @@ public class XStreamFactory {
     public static XStream createXStream() {
         final NameCoder nameCoder = new NoNameCoder();
 
-        return new XStream(new XppDomDriver(nameCoder) {
+        XStream xs = new XStream(new XppDomDriver(nameCoder) {
             @Override
             public HierarchicalStreamWriter createWriter(Writer out) {
                 return new PrettyPrintWriter(out, nameCoder) {
                     boolean cdataFlag = false;
                     Class<?> targetClass = null;
+
                     @Override
                     public void startNode(String name, Class clazz) {
                         super.startNode(name, clazz);
@@ -38,6 +40,7 @@ public class XStreamFactory {
                         }
                         cdataFlag = isCDATA(targetClass, name);
                     }
+
                     @Override
                     public void writeText(QuickWriter writer, String text) {
                         if (cdataFlag) {
@@ -51,6 +54,11 @@ public class XStreamFactory {
                 };
             }
         });
+        XStream.setupDefaultSecurity(xs);
+        xs.allowTypes(new Class[]{
+                InputMessageDTO.class
+        });
+        return xs;
     }
 
     private static boolean isCDATA(Class<?> clazz, String fieldAlias) {
@@ -73,7 +81,8 @@ public class XStreamFactory {
 
     /**
      * 检查是否有 @XStreamCDATA 注解
-     * @param clazz clazz
+     *
+     * @param clazz      clazz
      * @param fieldAlias fieldAlias
      */
     private static boolean isExistCDATA(Class<?> clazz, String fieldAlias) {

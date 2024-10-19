@@ -1,5 +1,7 @@
 package top.abigtree.im.robot.service.controller;
 
+import static top.abigtree.im.robot.service.utils.JsonUtil.toLog;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -22,6 +24,7 @@ import top.abigtree.im.robot.service.models.weixin.InputMessageDTO;
 import top.abigtree.im.robot.service.models.weixin.out.TextMessageDTO;
 import top.abigtree.im.robot.service.service.chat.ai.qianfan.QianFanChatService;
 import top.abigtree.im.robot.service.service.chat.ai.xfxh.XfXhChatService;
+
 
 /**
  * @author wangshuxin05 <wangshuxin05@kuaishou.com>
@@ -62,13 +65,13 @@ public class WechatServiceController {
         for (int n; (n = in.read(b)) != -1;) {
             xmlMsg.append(new String(b, 0, n, StandardCharsets.UTF_8));
         }
-        log.info("message: {}", xmlMsg);
         // 将xml内容转换为InputMessage对象
         InputMessageDTO inputMsg = (InputMessageDTO) xs.fromXML(xmlMsg.toString());
-        log.info("收到消息：{}", inputMsg);
+        log.info("Received message：{}", toLog(inputMsg));
         String answer =
                 qianFanChatService.chat(inputMsg.getContent(), inputMsg.getFromUserName(),
                         inputMsg.getToUserName(), inputMsg.getCreateTime());
+        log.info("Send message: {}", answer);
         if (StringUtils.isBlank(answer)) {
             response.getWriter().write(StringUtils.EMPTY);
             return;

@@ -12,12 +12,12 @@ import java.io.Serializable;
  * Created on 2024/10/19
  */
 @Data
-public class MysqlBasePO implements Serializable {
+public class MysqlBaseDO implements Serializable {
     @TableId(type = IdType.AUTO)
-    private Long id;
+    private long id;
 
-    private Long createTime;
+    private long createTime;
 
     @TableLogic
-    private Integer deleted;
+    private int deleted;
 }
