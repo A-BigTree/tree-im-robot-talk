@@ -1,12 +1,23 @@
 spring:
   application:
     name: tree-im-robot-service
+  datasource:
+    url: jdbc:sqlite:/your/path/robot.db:main
+    driver-class-name: org.sqlite.JDBC
 
 
 server:
   port: 8080
   servlet:
     context-path: /im/robot
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    use-generated-keys: true
 
 chat-ai:
   xfxh:
