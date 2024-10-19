@@ -12,7 +12,7 @@ import java.io.Serializable;
  * Created on 2024/10/19
  */
 @Data
-public class MysqlBaseDO implements Serializable {
+public class MysqlBasePO implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long id;
 
