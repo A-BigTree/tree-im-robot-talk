@@ -11,4 +11,9 @@ public interface IListener<T> {
     TreeRobotTopicEnum getTopic();
 
     void consumerMessage(T message);
+
+    @SuppressWarnings("unchecked")
+    default void consumer(Object message) {
+        consumerMessage((T) message);
+    }
 }

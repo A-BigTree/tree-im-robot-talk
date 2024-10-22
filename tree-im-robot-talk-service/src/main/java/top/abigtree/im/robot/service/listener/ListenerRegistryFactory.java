@@ -64,7 +64,7 @@ public class ListenerRegistryFactory implements ApplicationContextAware {
     private void sendMessage(TreeRobotTopicEnum topic, Object message) {
         listenerMapList.get(topic).forEach(subscriber -> {
             try {
-                subscriber.consumerMessage(message);
+                subscriber.consumer(message);
             } catch (Exception e) {
                 log.error("Send message error, e:", e);
             }
