@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.WebSocket;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import top.abigtree.im.robot.service.models.xfxh.MsgDTO;
+import top.abigtree.im.robot.service.models.ai.xfxh.MsgDTO;
 import top.abigtree.im.robot.service.service.chat.BaseChatWithCacheService;
 
 import java.util.Collections;
@@ -26,7 +26,7 @@ public class XfXhChatService extends BaseChatWithCacheService {
     private final static String TAG = "XfXh";
 
     @Override
-    protected String chatWithCache(String question) {
+    protected String chatWithCache(String question, String fromUser, String toUser, Long id) {
         // 如果是无效字符串，则不对大模型进行请求
         if (StringUtils.isBlank(question)) {
             return "无效问题，请重新输入";

@@ -8,8 +8,8 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.abigtree.im.robot.service.models.xfxh.MsgDTO;
-import top.abigtree.im.robot.service.models.xfxh.ResponseDTO;
+import top.abigtree.im.robot.service.models.ai.xfxh.MsgDTO;
+import top.abigtree.im.robot.service.models.ai.xfxh.ResponseDTO;
 
 /**
  * @author Shuxin Wang <shuxinwang662@gmail.com>

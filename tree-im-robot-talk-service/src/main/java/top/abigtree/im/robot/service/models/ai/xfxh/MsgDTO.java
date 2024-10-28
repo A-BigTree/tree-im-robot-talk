@@ -1,4 +1,4 @@
-package top.abigtree.im.robot.service.models.xfxh;
+package top.abigtree.im.robot.service.models.ai.xfxh;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

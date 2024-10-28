@@ -52,7 +52,7 @@ public abstract class BaseChatWithCacheService implements BaseChatService {
             log.error("2: Time waiting error");
         }
         CHAT_RECORD_CACHE.put(key, WAITING);
-        String answer = chatWithCache(question);
+        String answer = chatWithCache(question, fromUser, toUser, id);
         CHAT_ANSWER_CACHE.put(key, answer);
         CHAT_RECORD_CACHE.put(key, OK);
         return answer;
@@ -66,7 +66,7 @@ public abstract class BaseChatWithCacheService implements BaseChatService {
         return getTag() + "-" + fromUser + "-" + id;
     }
 
-    abstract protected String chatWithCache(String question);
+    abstract protected String chatWithCache(String question, String fromUser, String toUser, Long id);
 
     abstract public String getTag();
 }
