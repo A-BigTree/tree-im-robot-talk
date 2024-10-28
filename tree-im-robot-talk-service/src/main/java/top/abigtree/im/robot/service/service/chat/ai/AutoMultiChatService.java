@@ -2,6 +2,7 @@ package top.abigtree.im.robot.service.service.chat.ai;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import org.apache.commons.lang3.tuple.Pair;
+import top.abigtree.im.robot.service.models.BaseMsgDTO;
 import top.abigtree.im.robot.service.models.ai.MultiChatConfigDTO;
 import top.abigtree.im.robot.service.service.chat.BaseChatService;
 import top.abigtree.im.robot.service.service.chat.BaseChatWithCacheService;
@@ -32,24 +33,24 @@ public abstract class AutoMultiChatService extends BaseChatWithCacheService {
     protected abstract String getSource();
 
     @Override
-    protected String chatWithCache(String question, String fromUser, String toUser, Long id) {
-        if (MULTI_CHAT_CACHE.getIfPresent(fromUser) != null && CLOSE_MESSAGE.equals(question.trim())) {
-            MULTI_CHAT_CACHE.invalidate(fromUser);
+    protected String chatWithCache(BaseMsgDTO msg) {
+        if (MULTI_CHAT_CACHE.getIfPresent(msg.getFrom()) != null && CLOSE_MESSAGE.equals(msg.getContent().trim())) {
+            MULTI_CHAT_CACHE.invalidate(msg.getFrom());
             return "此次对话已结束～";
         }
-        MultiChatConfigDTO config = MULTI_CHAT_CACHE.get(fromUser, key -> MultiChatConfigDTO.defaultInstance());
+        MultiChatConfigDTO config = MULTI_CHAT_CACHE.get(msg.getFrom(), key -> MultiChatConfigDTO.defaultInstance());
         int round = config.getRound() + 1;
-        long tokens = config.getTokens() + question.length();
-        String answer = multiChat(question, config.getHistory());
-        String tips = "回复\"结束对话\"可结束本次会话～";
-        MultiChatConfigDTO.RoundChatDTO roundChat = new MultiChatConfigDTO.RoundChatDTO(question, answer);
+        long tokens = config.getTokens() + msg.getContent().length();
+        String answer = multiChat(msg.getContent(), config.getHistory());
+        String tips = "<a href=\"weixin://bizmsgmenu?msgmenucontent=结束对话&msgmenuid=0\">结束对话</a>";
+        MultiChatConfigDTO.RoundChatDTO roundChat = new MultiChatConfigDTO.RoundChatDTO(msg.getContent(), answer);
         config.getHistory().add(roundChat);
         if (config.overMaxRound(MAX_CHAT_ROUND)) {
             tips = "已到达最大对话轮数，自动关闭本次会话～";
-            MULTI_CHAT_CACHE.invalidate(fromUser);
+            MULTI_CHAT_CACHE.invalidate(msg.getFrom());
         } else {
             config.setTokens(tokens + answer.length());
-            MULTI_CHAT_CACHE.put(fromUser, config);
+            MULTI_CHAT_CACHE.put(msg.getFrom(), config);
         }
         return String.format(RESULT_FORMAT, answer, round, tokens, getSource(), tips);
     }

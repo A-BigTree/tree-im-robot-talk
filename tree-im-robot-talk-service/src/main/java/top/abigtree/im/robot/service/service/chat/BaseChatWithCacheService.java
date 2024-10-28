@@ -2,6 +2,7 @@ package top.abigtree.im.robot.service.service.chat;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.extern.slf4j.Slf4j;
+import top.abigtree.im.robot.service.models.BaseMsgDTO;
 import top.abigtree.im.robot.service.utils.CacheUtil;
 
 import java.util.LinkedHashMap;
@@ -26,8 +27,8 @@ public abstract class BaseChatWithCacheService implements BaseChatService {
     private final static Cache<String, Integer> CHAT_RECORD_CACHE = CacheUtil.buildCacheWithCapacity(MAX_CACHE_SIZE);
 
     @Override
-    public String chat(String question, String fromUser, String toUser, Long id) {
-        String key = buildCacheKey(question, fromUser, toUser, id);
+    public String chat(BaseMsgDTO msg) {
+        String key = buildCacheKey(msg);
         try {
             if (CHAT_RECORD_CACHE.getIfPresent(key) != null) {
                 if (!Objects.equals(CHAT_RECORD_CACHE.getIfPresent(key), OK)) {
@@ -52,7 +53,7 @@ public abstract class BaseChatWithCacheService implements BaseChatService {
             log.error("2: Time waiting error");
         }
         CHAT_RECORD_CACHE.put(key, WAITING);
-        String answer = chatWithCache(question, fromUser, toUser, id);
+        String answer = chatWithCache(msg);
         CHAT_ANSWER_CACHE.put(key, answer);
         CHAT_RECORD_CACHE.put(key, OK);
         return answer;
@@ -62,11 +63,11 @@ public abstract class BaseChatWithCacheService implements BaseChatService {
         return true;
     }
 
-    protected String buildCacheKey(String question, String fromUser, String toUser, Long id) {
-        return getTag() + "-" + fromUser + "-" + id;
+    protected String buildCacheKey(BaseMsgDTO msg) {
+        return getTag() + "-" + msg.getFrom() + "-" + msg.getId();
     }
 
-    abstract protected String chatWithCache(String question, String fromUser, String toUser, Long id);
+    abstract protected String chatWithCache(BaseMsgDTO msg);
 
     abstract public String getTag();
 }

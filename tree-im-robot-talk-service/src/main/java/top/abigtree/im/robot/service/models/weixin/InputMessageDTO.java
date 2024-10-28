@@ -63,4 +63,7 @@ public class InputMessageDTO implements Serializable {
     private String eventKey;
     @XStreamAlias("Ticket")
     private String ticket;
+    // 交互按钮
+    @XStreamAlias("bizmsgmenuid")
+    private Long msgMenuId;
 }

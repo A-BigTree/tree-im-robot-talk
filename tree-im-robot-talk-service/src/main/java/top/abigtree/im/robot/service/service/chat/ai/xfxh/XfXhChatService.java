@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.WebSocket;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import top.abigtree.im.robot.service.models.BaseMsgDTO;
 import top.abigtree.im.robot.service.models.ai.xfxh.MsgDTO;
 import top.abigtree.im.robot.service.service.chat.BaseChatWithCacheService;
 
@@ -26,9 +27,9 @@ public class XfXhChatService extends BaseChatWithCacheService {
     private final static String TAG = "XfXh";
 
     @Override
-    protected String chatWithCache(String question, String fromUser, String toUser, Long id) {
+    protected String chatWithCache(BaseMsgDTO msg) {
         // 如果是无效字符串，则不对大模型进行请求
-        if (StringUtils.isBlank(question)) {
+        if (StringUtils.isBlank(msg.getContent())) {
             return "无效问题，请重新输入";
         }
         // 获取连接令牌
@@ -37,7 +38,7 @@ public class XfXhChatService extends BaseChatWithCacheService {
         }
 
         // 创建消息对象
-        MsgDTO msgDTO = MsgDTO.createUserMsg(question);
+        MsgDTO msgDTO = MsgDTO.createUserMsg(msg.getContent());
         // 创建监听器
         XfXhWebSocketListener listener = new XfXhWebSocketListener();
         // 发送问题给大模型，生成 websocket 连接

@@ -6,7 +6,6 @@ import com.baidubce.qianfan.model.chat.ChatResponse;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import top.abigtree.im.robot.service.models.ai.MultiChatConfigDTO;
-import top.abigtree.im.robot.service.service.chat.BaseChatWithCacheService;
 import top.abigtree.im.robot.service.service.chat.ai.AutoMultiChatService;
 
 import java.util.List;

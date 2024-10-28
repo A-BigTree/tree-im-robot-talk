@@ -65,6 +65,7 @@ public class WechatServiceController {
         for (int n; (n = in.read(b)) != -1;) {
             xmlMsg.append(new String(b, 0, n, StandardCharsets.UTF_8));
         }
+        log.info("Received xml content:\n {}", xmlMsg);
         // 将xml内容转换为InputMessage对象
         InputMessageDTO inputMsg = (InputMessageDTO) xs.fromXML(xmlMsg.toString());
         log.info("Received message：{}", toLog(inputMsg));
