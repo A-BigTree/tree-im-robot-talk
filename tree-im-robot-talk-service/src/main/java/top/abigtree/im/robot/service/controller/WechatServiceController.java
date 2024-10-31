@@ -10,7 +10,6 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,8 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import top.abigtree.im.robot.service.config.XStreamFactory;
 import top.abigtree.im.robot.service.models.weixin.InputMessageDTO;
 import top.abigtree.im.robot.service.models.weixin.out.TextMessageDTO;
-import top.abigtree.im.robot.service.service.chat.ai.qianfan.QianFanChatService;
-import top.abigtree.im.robot.service.service.chat.ai.xfxh.XfXhChatService;
+import top.abigtree.im.robot.service.service.adapter.WeiXinImAdapterService;
 
 
 /**
@@ -35,9 +33,7 @@ import top.abigtree.im.robot.service.service.chat.ai.xfxh.XfXhChatService;
 @Slf4j
 public class WechatServiceController {
     @Resource
-    private XfXhChatService xfXhChatService;
-    @Resource
-    private QianFanChatService qianFanChatService;
+    private WeiXinImAdapterService weiXinImAdapterService;
 
     @RequestMapping(value = "/chat", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -69,24 +65,10 @@ public class WechatServiceController {
         // 将xml内容转换为InputMessage对象
         InputMessageDTO inputMsg = (InputMessageDTO) xs.fromXML(xmlMsg.toString());
         log.info("Received message：{}", toLog(inputMsg));
-        String answer =
-                qianFanChatService.chat(inputMsg.getContent(), inputMsg.getFromUserName(),
-                        inputMsg.getToUserName(), inputMsg.getCreateTime());
-        log.info("Send message: {}", answer);
-        if (StringUtils.isBlank(answer)) {
-            response.getWriter().write(StringUtils.EMPTY);
-            return;
-        }
+        TextMessageDTO message = weiXinImAdapterService.handleMsg(inputMsg);
+        log.info("Send message: {}", toLog(message));
         // 回复消息
-        xs.processAnnotations(TextMessageDTO.class);
-        TextMessageDTO out = TextMessageDTO.builder()
-                .fromUserName(inputMsg.getToUserName())
-                .toUserName(inputMsg.getFromUserName())
-                .createTime(System.currentTimeMillis())
-                .msgType("text")
-                .content(answer)
-                .build();
-        String str = xs.toXML(out);
+        String str = xs.toXML(message);
         response.getWriter().write(str);
     }
 }

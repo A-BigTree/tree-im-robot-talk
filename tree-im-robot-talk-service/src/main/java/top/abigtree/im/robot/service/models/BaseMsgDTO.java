@@ -19,5 +19,6 @@ public class BaseMsgDTO {
     private String from;
     private String to;
     private long id;
+    private String type;
     private TreeImMessageSourceEnum source;
 }
