@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import top.abigtree.im.robot.service.models.BaseMsgDTO;
 import top.abigtree.im.robot.service.utils.CacheUtil;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**

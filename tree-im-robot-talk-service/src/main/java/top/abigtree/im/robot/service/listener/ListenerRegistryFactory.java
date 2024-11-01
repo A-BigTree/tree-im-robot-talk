@@ -55,11 +55,11 @@ public class ListenerRegistryFactory implements ApplicationContextAware {
         }
     }
 
-    public List<IListener<?>> getListenersByTopic(TreeRobotTopicEnum topic) {
-        return listenerMapList.getOrDefault(topic, new ArrayList<>());
-    }
-
-
+   public void sendMessageAsync(TreeRobotTopicEnum topic, Object message) {
+        threadPool.submit(() -> {
+            sendMessage(topic, message);
+        });
+   }
 
     private void sendMessage(TreeRobotTopicEnum topic, Object message) {
         listenerMapList.get(topic).forEach(subscriber -> {

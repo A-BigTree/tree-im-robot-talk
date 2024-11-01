@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import top.abigtree.im.robot.service.models.BaseMsgDTO;
 import top.abigtree.im.robot.service.service.chat.ai.qianfan.QianFanChatService;
 import top.abigtree.im.robot.service.service.chat.ai.xfxh.XfXhChatService;
 
@@ -26,6 +27,13 @@ public class TreeTestController {
 
     @GetMapping("/send")
     public String sendQuestion(@RequestParam(value = "q", defaultValue = "你好") String question) {
-        return qianFanChatService.chat(question, "admin", "admin", System.currentTimeMillis());
+        return qianFanChatService.chat(
+                BaseMsgDTO.builder()
+                        .content(question)
+                        .from("admin")
+                        .to("admin")
+                        .id(System.currentTimeMillis())
+                        .build()
+        );
     }
 }
