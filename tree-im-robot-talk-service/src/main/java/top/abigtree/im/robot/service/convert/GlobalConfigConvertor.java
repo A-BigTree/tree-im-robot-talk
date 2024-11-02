@@ -15,4 +15,6 @@ public interface GlobalConfigConvertor {
     GlobalConfigConvertor CONFIG_CONVERTOR = Mappers.getMapper(GlobalConfigConvertor.class);
 
     ConfigUserRoleDO convertUserRoleDO(ConfigUserRoleDTO dto);
+
+    ConfigUserRoleDTO convertUserRoleDTO(ConfigUserRoleDO roleDO);
 }

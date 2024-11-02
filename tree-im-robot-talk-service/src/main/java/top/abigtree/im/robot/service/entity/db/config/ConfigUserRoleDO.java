@@ -15,4 +15,5 @@ public class ConfigUserRoleDO extends MysqlBaseDO {
     private int roleType;
     private int status;
     private String email;
+    private int source;
 }

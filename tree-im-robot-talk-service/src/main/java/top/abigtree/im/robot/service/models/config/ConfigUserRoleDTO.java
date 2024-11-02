@@ -12,4 +12,6 @@ public class ConfigUserRoleDTO {
     private String userName;
     private int status;
     private String email;
+    private int roleType;
+    private int source;
 }
